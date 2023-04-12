@@ -16,7 +16,26 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {addMenu} from '../../storages/actions/menu';
 import * as ImagePicker from 'react-native-image-picker';
-const AddRecipesScreen = () => {
+import {
+  Spinner,
+  HStack,
+  Heading,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
+
+const Loading = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="primary.500" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
+
+const AddRecipesScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const add_menu = useSelector(state => state.add_menu);
   const token = useSelector(state => state.auth.data.data.token);
@@ -36,7 +55,7 @@ const AddRecipesScreen = () => {
       name: response.assets[0].fileName,
       type: response.assets[0].type,
     });
-    setData(dispatch(addMenu(formData, token)));
+    setData(dispatch(addMenu(formData, token)), navigation.navigate('MyMenu'));
   };
   const requestPermission = async () => {
     try {
@@ -160,6 +179,14 @@ const AddRecipesScreen = () => {
           </View>
           <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
             <Button color="#EFC81A" title="POST" onPress={postForm} />
+            {add_menu.isLoading && (
+              <NativeBaseProvider>
+                <Center flex={1} px="3">
+                  <Loading />
+                </Center>
+              </NativeBaseProvider>
+            )}
+            {add_menu.isError}
           </View>
         </View>
       </ScrollView>

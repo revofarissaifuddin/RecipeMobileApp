@@ -19,9 +19,9 @@ export const newMenu = () => async dispatch => {
 };
 
 //screens myrecipes
-export const getMenu = (token) => async dispatch => {
+export const getMenu = token => async dispatch => {
   try {
-      let headers = {
+    let headers = {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ export const getMenu = (token) => async dispatch => {
 };
 
 //screens detail recipe
-export const detailMenu = (id) => async dispatch => {
+export const detailMenu = id => async dispatch => {
   try {
     dispatch({type: 'GET_DETAIL_MENU_PENDING'});
     const result = await axios.get(
@@ -58,12 +58,10 @@ export const detailMenu = (id) => async dispatch => {
 };
 
 //screen search menu
-export const searchMenu = (data) => async dispatch => {
+export const searchMenu = data => async dispatch => {
   try {
     dispatch({type: 'GET_MENU_PENDING'});
-    const result = await axios.get(
-      url + `/recipes/all-recipe?search=${data}`,
-    );
+    const result = await axios.get(url + `/recipes/all-recipe?search=${data}`);
     const menu = result.data.data;
     dispatch({type: 'GET_MENU_SUCCESS', payload: menu});
   } catch (err) {
@@ -74,7 +72,7 @@ export const searchMenu = (data) => async dispatch => {
 };
 
 //delete menu recipes
-export const deleteMenu = (id,token) => async dispatch => {
+export const deleteMenu = (id, token) => async dispatch => {
   try {
     let headers = {
       headers: {
@@ -106,16 +104,35 @@ export const addMenu = (data, token) => async dispatch => {
       },
     };
     dispatch({type: 'ADD_MENU_PENDING'});
-    const result = await axios.post(url+
-      `/recipes`,
-      data,
-      headers,
-    );
+    const result = await axios.post(url + `/recipes`, data, headers);
     const add_menu = result.data;
     dispatch({type: 'ADD_MENU_SUCCESS', payload: add_menu});
   } catch (error) {
     dispatch({type: `ADD_MENU_ERROR`, payload: error.respons.data.message});
     console.log('Add Menu Error');
+    console.log(error);
+  }
+};
+
+//edit menu
+export const updateEditMenu = (id, data, token) => async dispatch => {
+  try {
+    let headers = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({type: 'UPDATE_EDIT_MENU_PENDING'});
+    const result = axios.put(url + `/recipes/my-recipe/${id}`, data, headers);
+    const updateMenu = result.data;
+    dispatch({type: 'UPDATE_EDIT_MENU_SUCCESS', payload: updateMenu});
+  } catch (error) {
+    dispatch({
+      type: 'UPDATE_EDIT_MENU_FAILED',
+      payload: error.respons.data.message,
+    });
+    console.log('Update Menu Error');
     console.log(error);
   }
 };

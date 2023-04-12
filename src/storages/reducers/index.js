@@ -8,6 +8,7 @@ import search_menu from "./getSearchMenu";
 import delete_menu from "./deleteMenu";
 import myprofile from "./getMyProfile";
 import add_menu from "./addMenu";
+import updateMenu from "./updateMenu";
 const appReducers = combineReducers({
   auth,
   user_regris,
@@ -17,6 +18,7 @@ const appReducers = combineReducers({
   search_menu,
   delete_menu,
   myprofile,
-  add_menu
+  add_menu,
+  updateMenu,
 });
 export default appReducers;

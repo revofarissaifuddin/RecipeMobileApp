@@ -11,6 +11,24 @@ import {
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { login } from '../../storages/actions/auth';
+import {
+  Spinner,
+  HStack,
+  Heading,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
+
+const Loading = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="primary.500" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
@@ -86,7 +104,13 @@ const Login = ({navigation}) => {
             // onPress={() => dispatch(login())}
             onPress={postData}></Button>
         </View>
-        {auth.isLoading && <ActivityIndicator size="large" color="#00ff00" />}
+        {auth.isLoading && (
+          <NativeBaseProvider>
+            <Center flex={1} px="3">
+              <Loading />
+            </Center>
+          </NativeBaseProvider>
+        )}
         {auth.isError}
         <View
           style={[
