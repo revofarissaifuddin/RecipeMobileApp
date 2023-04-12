@@ -1,6 +1,4 @@
-import axios, {useState, useEffect} from 'axios';
-// import { AsyncStorage } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import {REACT_APP_BASE_URL} from '@env';
 const url = REACT_APP_BASE_URL;
 
@@ -94,6 +92,30 @@ export const deleteMenu = (id,token) => async dispatch => {
       payload: error.response.data.message,
     });
     console.log('DELETEMenu error');
+    console.log(error);
+  }
+};
+
+//add menu
+export const addMenu = (data, token) => async dispatch => {
+  try {
+    let headers = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({type: 'ADD_MENU_PENDING'});
+    const result = await axios.post(url+
+      `/recipes`,
+      data,
+      headers,
+    );
+    const add_menu = result.data;
+    dispatch({type: 'ADD_MENU_SUCCESS', payload: add_menu});
+  } catch (error) {
+    dispatch({type: `ADD_MENU_ERROR`, payload: error.respons.data.message});
+    console.log('Add Menu Error');
     console.log(error);
   }
 };

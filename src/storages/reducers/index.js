@@ -6,6 +6,8 @@ import newMenu from "./getNewMenu";
 import detail from "./getDetailRecipes";
 import search_menu from "./getSearchMenu";
 import delete_menu from "./deleteMenu";
+import myprofile from "./getMyProfile";
+import add_menu from "./addMenu";
 const appReducers = combineReducers({
   auth,
   user_regris,
@@ -13,6 +15,8 @@ const appReducers = combineReducers({
   newMenu,
   detail,
   search_menu,
-  delete_menu
+  delete_menu,
+  myprofile,
+  add_menu
 });
 export default appReducers;

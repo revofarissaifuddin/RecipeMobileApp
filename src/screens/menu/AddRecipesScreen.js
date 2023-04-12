@@ -6,11 +6,101 @@ import {
   SafeAreaView,
   ScrollView,
   Button,
+  TouchableOpacity,
+  PermissionsAndroid,
+  Image
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import {launchImageLibrary} from 'react-native-image-picker'
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import {addMenu} from '../../storages/actions/menu';
+import * as ImagePicker from 'react-native-image-picker';
 const AddRecipesScreen = () => {
+  const dispatch = useDispatch();
+  const add_menu = useSelector(state => state.add_menu);
+  const token = useSelector(state => state.auth.data.data.token);
+  const [title, setTitle] = useState('');
+  const [descriptions, setDescriptions] = useState('');
+  const [category_id, setCategory_id] = useState('');
+  const [response, setResponse] = useState(null);
+  const [data, setData] = useState(null);
+  const postForm = e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('descriptions', descriptions);
+    formData.append('category_id', category_id);
+    formData.append('photo', {
+      uri: response.assets[0].uri,
+      name: response.assets[0].fileName,
+      type: response.assets[0].type,
+    });
+    setData(dispatch(addMenu(formData, token)));
+  };
+  const requestPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App Needs Camera Access',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+          buttonNeutral: 'ask me later',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('access camera success');
+        cameraLaunch();
+      } else {
+        console.log('access camera failed');
+        console.log(PermissionsAndroid.RESULTS.GRANTED);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const cameraLaunch = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchCamera(options, res => {
+      console.log('response = ', res);
+      if (res.didCancel) {
+        console.log('user cancel image picker');
+      } else if (res.error) {
+        console.log('image picker error', res.error);
+      } else {
+        console.log(res);
+        setResponse(res);
+      }
+    });
+  };
+
+  const galleryLaunch = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, res => {
+      console.log('response = ', res);
+      if (res.didCancel) {
+        console.log('user cancel gallery picker');
+      } else if (res.error) {
+        console.log('gallery picker error', res.error);
+      } else {
+        console.log(res);
+        setResponse(res);
+      }
+    });
+  };
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
       <ScrollView style={{height: '100%'}}>
@@ -24,28 +114,58 @@ const AddRecipesScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="Title"
+                value={title}
+                onChangeText={value => setTitle(value, 'title')}
                 underlineColorAndroid="transparent"
               />
             </View>
           </View>
           <View style={[styles.sectionInput, {height: 150}]}>
-            <TextInput placeholder="Ingredients" />
+            <TextInput
+              multiline={true}
+              numberOfLines={10}
+              placeholder="Ingredients"
+              value={descriptions}
+              onChangeText={value => setDescriptions(value, 'descriptions')}
+            />
+          </View>
+          <View style={[styles.sectionInput, {alignSelf: 'center'}]}>
+            <View style={{padding: 10}}>
+              <TouchableOpacity onPress={() => requestPermission()}>
+                <Text>Add Foto</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{marginTop: 10}}
+                onPress={() => galleryLaunch()}>
+                <Text>Gallery</Text>
+              </TouchableOpacity>
+              {response && (
+                <View style={{height: 200, width: 200, backgroundColor: 'red'}}>
+                  <Image
+                    resizeMode="cover"
+                    style={{height: 200, width: 200}}
+                    source={{uri: response?.assets[0].uri}}
+                  />
+                </View>
+              )}
+              <Text style={{color: 'black'}}>{data?.data?.message}</Text>
+            </View>
           </View>
           <View style={styles.sectionInput}>
-            <TextInput placeholder="Add Photo" />
+            <TextInput
+              placeholder="Category"
+              value={category_id}
+              onChangeText={value => setCategory_id(value, 'category_id')}
+            />
           </View>
-          <View style={styles.sectionInput}>
-            <TextInput placeholder="Category" />
-          </View>
-          <View style={{marginTop: '10%', width: 100, marginBottom:20}}>
-            <Button color="#EFC81A" title="POST" />
+          <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
+            <Button color="#EFC81A" title="POST" onPress={postForm} />
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   title: {
@@ -80,7 +200,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: 'white',
     marginTop: '5%',
-    padding:5
+    padding: 5,
   },
 });
 export default AddRecipesScreen;

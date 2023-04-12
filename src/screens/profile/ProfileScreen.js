@@ -7,18 +7,26 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { logout } from '../../storages/actions/auth';
+import {logout} from '../../storages/actions/auth';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {getProfile} from '../../storages/actions/profile';
 
 const ProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
+  const myprofile = useSelector(state => state.myprofile);
+  const token = useSelector(state => state.auth.data.data.token);
+
+  //get My recipe
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, [dispatch, token]);
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      <ScrollView style={{height: '100%'}} showsVerticalScrollIndicator>
+      <View style={{height: '100%'}} >
         <View
           style={{
             height: Dimensions.get('window').height / 2.5,
@@ -26,22 +34,31 @@ const ProfileScreen = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image
-              style={{width: 100, height: 100, borderRadius: 1000}}
-              source={require('../../assets/fg-pwd.png')}
-            />
-            <Text
-              style={{
-                marginTop: 15,
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              Mareta Lopeda
-            </Text>
-          </View>
+          <FlatList
+            data={myprofile.data}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => {
+              return (
+                <View style={{justifyContent: 'center', alignItems: 'center',marginTop:30}}>
+                  <Image
+                    style={{width: 100, height: 100, borderRadius: 1000}}
+                    source={require('../../assets/fg-pwd.png')}
+                  />
+                  <Text
+                    style={{
+                      marginTop: 15,
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    {item.fullname}
+                  </Text>
+                </View>
+              );
+            }}
+          />
         </View>
+
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
@@ -50,7 +67,7 @@ const ProfileScreen = ({navigation}) => {
               borderTopStartRadius: 20,
               borderTopEndRadius: 20,
               width: '95%',
-              height: Dimensions.get('window').height / 0.5,
+              height: Dimensions.get('window').height / 1.5,
             }}>
             <View style={{padding: 40}}>
               <View style={{flexDirection: 'row', padding: 2}}>
@@ -77,7 +94,9 @@ const ProfileScreen = ({navigation}) => {
                   />
                 </View>
               </View>
-              <View style={{flexDirection: 'row', padding: 2, marginTop: 30}}>
+              <TouchableOpacity
+                style={{flexDirection: 'row', padding: 2, marginTop: 30}}
+                onPress={() => navigation.navigate('MyMenu')}>
                 <View>
                   <Icon
                     style={{fontSize: 20, color: '#EFC81A'}}
@@ -100,8 +119,10 @@ const ProfileScreen = ({navigation}) => {
                     name="chevron-forward-outline"
                   />
                 </View>
-              </View>
-              <View style={{flexDirection: 'row', padding: 2, marginTop: 30}}>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{flexDirection: 'row', padding: 2, marginTop: 30}}
+                onPress={() => navigation.navigate('SaveLikeScreen')}>
                 <View>
                   <Icon
                     style={{fontSize: 20, color: '#EFC81A'}}
@@ -124,8 +145,10 @@ const ProfileScreen = ({navigation}) => {
                     name="chevron-forward-outline"
                   />
                 </View>
-              </View>
-              <View style={{flexDirection: 'row', padding: 2, marginTop: 30}}>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{flexDirection: 'row', padding: 2, marginTop: 30}}
+                onPress={() => navigation.navigate('SaveLikeScreen')}>
                 <View>
                   <Icon
                     style={{fontSize: 20, color: '#EFC81A'}}
@@ -148,7 +171,7 @@ const ProfileScreen = ({navigation}) => {
                     name="chevron-forward-outline"
                   />
                 </View>
-              </View>
+              </TouchableOpacity>
               <TouchableOpacity
                 style={{flexDirection: 'row', padding: 2, marginTop: 30}}
                 onPress={() => dispatch(logout())}>
@@ -178,7 +201,7 @@ const ProfileScreen = ({navigation}) => {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

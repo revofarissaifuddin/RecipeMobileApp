@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -83,9 +84,10 @@ const Login = ({navigation}) => {
             color="#EFC81A"
             title="LOGIN"
             // onPress={() => dispatch(login())}
-            onPress={postData}>
-          </Button>
+            onPress={postData}></Button>
         </View>
+        {auth.isLoading && <ActivityIndicator size="large" color="#00ff00" />}
+        {auth.isError}
         <View
           style={[
             styles.justifyContentCenter,

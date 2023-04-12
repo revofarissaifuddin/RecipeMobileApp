@@ -1,9 +1,4 @@
 import axios from 'axios';
-// import {REACT_APP_BASE_URL} from '@env'
-const dataDummy = {
-  email: 'revfs@gmail.com',
-  password: '123',
-};
 import {REACT_APP_BASE_URL} from '@env'
 const url = REACT_APP_BASE_URL;
 

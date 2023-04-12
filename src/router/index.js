@@ -10,6 +10,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  RefreshControl,
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -25,6 +26,7 @@ import {
   MyRecipesScreen,
   SearchRecipesScreen,
   DetailIngredientsScreen,
+  SaveLikeScreen
 } from '../screens';
 import { newMenu } from '../storages/actions/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,7 +34,16 @@ import {useDispatch, useSelector} from 'react-redux';
 function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   const new_Menu = useSelector(state => state.newMenu);
-  const {height, width} = Dimensions.get('window');
+  const { height, width } = Dimensions.get('window');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   //get new recipe
   useEffect(() => {
     dispatch(newMenu());
@@ -40,7 +51,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      <ScrollView style={{height: '100%'}}>
+      <ScrollView style={{ height: '100%' }}yyyy>
         <View style={{flex: 1, alignItems: 'center'}}>
           <View style={{marginTop: '5%', padding: 10}}>
             <TouchableOpacity style={styles.sectionStyle}>
@@ -260,7 +271,12 @@ function HomeScreen({ navigation }) {
                               width: '90%',
                               height: '100%',
                               borderRadius: 10,
-                            }}>
+                            }}
+                            onPress={() =>
+                              navigation.navigate(`DetailIngredientsScreen`, {
+                                itemId: `${item.id}`,
+                              })
+                            }>
                             <ImageBackground
                               source={{uri: `${item.photo}`}}
                               // source={require('../assets/bg-detail.png')}
@@ -291,7 +307,7 @@ function HomeScreen({ navigation }) {
                         </View>
                       );
                     }}
-                  />
+                  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}/>
                 </View>
               </View>
             </View>
@@ -437,6 +453,13 @@ export default function Router(){
           <Stack.Screen
             name="DetailIngredientsScreen"
             component={DetailIngredientsScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SaveLikeScreen"
+            component={SaveLikeScreen}
             options={{
               headerShown: false,
             }}

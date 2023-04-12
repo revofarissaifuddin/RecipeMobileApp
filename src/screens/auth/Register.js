@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -96,6 +97,8 @@ const Register = ({ navigation }) => {
         <View style={styles.btnLogin}>
           <Button color="#EFC81A" title="REGISTER" onPress={regrisUser} />
         </View>
+        {user_regris.isLoading && <ActivityIndicator />}
+        {user_regris.isError}
         <View
           style={[
             styles.justifyContentCenter,

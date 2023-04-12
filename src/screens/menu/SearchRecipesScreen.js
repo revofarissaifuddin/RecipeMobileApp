@@ -5,7 +5,8 @@ import {
   View,
   SafeAreaView,
   TextInput,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,81 +23,91 @@ const SearchRecipesScreen = ({ navigation }) => {
   }, [search_Menu]);
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      
-        <View style={{flex: 1, alignItems: 'center'}}>
-          <View style={{marginTop: '5%'}}>
-            <View style={styles.sectionStyle}>
-              <Icon style={styles.searchOutline} name="search-outline"></Icon>
-              <TextInput
-                style={styles.input}
-                placeholder="Search Pasta, Bread , etc"
-                value={search_Menu}
-                onChangeText={value => setSearchMenu(value, 'search_Menu')}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-            <View style={{marginTop: '1%'}}>
-              <View>
-                <FlatList
-                  data={search_menu.data}
-                  keyExtractor={item => item.id}
-                  renderItem={({item}) => {
-                    return (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          width: '100%',
-                          backgroundColor: 'white',
-                          borderRadius: 15,
-                          padding: 10,
-                          marginTop:10
-                        }}>
-                        <View style={{width: '30%'}}>
-                          <Image
-                            style={{width: 100, height: 100, borderRadius: 15}}
-                            source={{uri: `${item.photo}`}}
-                          />
-                        </View>
-                        <View style={{width: '40%'}}>
-                          <View style={{marginStart: 0}}>
-                            <View>
-                              <Text style={{color: 'black'}}>{item.title}</Text>
-                            </View>
-                            <View
+      <View style={{flex: 1, alignItems: 'center'}}>
+        <View style={{marginTop: '5%'}}>
+          <View style={styles.sectionStyle}>
+            <Icon style={styles.searchOutline} name="search-outline"></Icon>
+            <TextInput
+              style={styles.input}
+              placeholder="Search Pasta, Bread , etc"
+              value={search_Menu}
+              onChangeText={value => setSearchMenu(value, 'search_Menu')}
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View
+            style={{
+              marginTop: '1%',
+              height: Dimensions.get('window').height / 1,
+            }}>
+            <View>
+              <FlatList
+                data={search_menu.data}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        width: '100%',
+                        backgroundColor: 'white',
+                        borderRadius: 15,
+                        padding: 10,
+                        marginTop: 10,
+                      }}>
+                      <View style={{width: '30%'}}>
+                        <Image
+                          style={{width: 100, height: 100, borderRadius: 15}}
+                          source={{uri: `${item.photo}`}}
+                        />
+                      </View>
+                      <View style={{width: '40%'}}>
+                        <View style={{marginStart: 0}}>
+                          <View>
+                            <Text
+                              style={{color: 'black', fontWeight: 'bold'}}
+                              onPress={() =>
+                                navigation.navigate(`DetailIngredientsScreen`, {
+                                  itemId: `${item.id}`,
+                                })
+                              }>
+                              {item.title}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginTop: 10,
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              style={{fontSize: 20, color: 'yellow'}}
+                              name="star-outline"
+                            />
+                            <Text style={{marginStart: 10}}>4.3</Text>
+                            <Icon
                               style={{
-                                flexDirection: 'row',
-                                marginTop: 10,
-                                alignItems: 'center',
-                              }}>
-                              <Icon
-                                style={{fontSize: 20, color: 'yellow'}}
-                                name="star-outline"
-                              />
-                              <Text style={{marginStart: 10}}>4.3</Text>
-                              <Icon
-                                style={{
-                                  fontSize: 10,
-                                  color: 'black',
-                                  marginLeft: 10,
-                                }}
-                                name="ellipse-outline"
-                              />
-                              <Text style={{marginStart: 10}}>
-                                {item.category}
-                              </Text>
-                            </View>
+                                fontSize: 10,
+                                color: 'black',
+                                marginLeft: 10,
+                              }}
+                              name="ellipse-outline"
+                            />
+                            <Text style={{marginStart: 10}}>
+                              {item.category}
+                            </Text>
                           </View>
                         </View>
                       </View>
-                    );
-                  }}
-                />
-              </View>
+                    </View>
+                  );
+                }}
+              />
             </View>
           </View>
         </View>
-      
+      </View>
     </SafeAreaView>
   );
 };
