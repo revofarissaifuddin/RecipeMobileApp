@@ -104,6 +104,7 @@ const Login = ({navigation}) => {
             // onPress={() => dispatch(login())}
             onPress={postData}></Button>
         </View>
+        {auth.isError && <Text>Login Failed</Text>}
         {auth.isLoading && (
           <NativeBaseProvider>
             <Center flex={1} px="3">
@@ -111,7 +112,6 @@ const Login = ({navigation}) => {
             </Center>
           </NativeBaseProvider>
         )}
-        {auth.isError}
         <View
           style={[
             styles.justifyContentCenter,

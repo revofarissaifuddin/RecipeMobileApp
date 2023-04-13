@@ -10,6 +10,7 @@ import MyRecipesScreen from './menu/MyRecipesScreen';
 import SaveLikeScreen from './menu/SaveLikeScreen';
 import SearchRecipesScreen from './menu/SearchRecipesScreen';
 import ProfileScreen from './profile/ProfileScreen';
+import EditRecipesScreen from './menu/EditRecipesScreen';
 
 export {
   Login,
@@ -24,4 +25,5 @@ export {
   SaveLikeScreen,
   SearchRecipesScreen,
   ProfileScreen,
+  EditRecipesScreen,
 };

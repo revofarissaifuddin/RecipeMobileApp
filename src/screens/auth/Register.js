@@ -10,24 +10,7 @@ import {
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { regUser } from '../../storages/actions/auth';
-/* import {
-  Spinner,
-  HStack,
-  Heading,
-  Center,
-  NativeBaseProvider,
-} from 'native-base';
-const Loading = () => {
-  return (
-    <HStack space={2} justifyContent="center">
-      <Spinner accessibilityLabel="Loading posts" />
-      <Heading color="primary.500" fontSize="md">
-        Loading
-      </Heading>
-    </HStack>
-  );
-};
- */
+
 const Register = ({ navigation }) => {
   const dispatch = useDispatch();
   const user_regris = useSelector(state => state.user_regris);

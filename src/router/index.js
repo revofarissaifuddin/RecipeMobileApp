@@ -26,7 +26,8 @@ import {
   MyRecipesScreen,
   SearchRecipesScreen,
   DetailIngredientsScreen,
-  SaveLikeScreen
+  SaveLikeScreen,
+  EditRecipesScreen,
 } from '../screens';
 import { newMenu } from '../storages/actions/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -460,6 +461,13 @@ export default function Router(){
           <Stack.Screen
             name="SaveLikeScreen"
             component={SaveLikeScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EditRecipesScreen"
+            component={EditRecipesScreen}
             options={{
               headerShown: false,
             }}

@@ -6,14 +6,31 @@ import {
   SafeAreaView,
   TextInput,
   FlatList,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { searchMenu } from '../../storages/actions/menu';
+import {searchMenu} from '../../storages/actions/menu';
 import {useDispatch, useSelector} from 'react-redux';
+import {
+  Spinner,
+  HStack,
+  Heading,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
 
-const SearchRecipesScreen = ({ navigation }) => {
+const Loading = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="primary.500" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
+const SearchRecipesScreen = ({navigation}) => {
   const [search_Menu, setSearchMenu] = useState('');
   const search_menu = useSelector(state => state.search_menu);
   const dispatch = useDispatch();
@@ -35,6 +52,14 @@ const SearchRecipesScreen = ({ navigation }) => {
               underlineColorAndroid="transparent"
             />
           </View>
+          {search_menu.isError && <Text>Get Menu Failed</Text>}
+          {search_menu.isLoading && (
+            <NativeBaseProvider>
+              <Center flex={1} px="3">
+                <Loading />
+              </Center>
+            </NativeBaseProvider>
+          )}
           <View
             style={{
               marginTop: '1%',
