@@ -17,17 +17,29 @@ const Register = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const regrisUser = e => {
-    e.preventDefault();
-    console.log(name);
-    console.log(email);
-    console.log(password);
+  const regrisUser = () => {
     const data = {
       name,
       email,
       password,
     };
     dispatch(regUser(data), navigation.navigate('Login'));
+  };
+  const checkTextInput = () => {
+    if (!name.trim()) {
+      alert('Please Enter Name');
+      return;
+    }
+    if (!email.match(/\S+@\S+\.\S+/)) {
+      alert('Please Enter Email');
+      return;
+    }
+    if (!password.trim()) {
+      alert('Please Enter password');
+      return;
+    }
+    alert('Success');
+    regrisUser();
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -95,7 +107,7 @@ const Register = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.btnLogin}>
-          <Button color="#EFC81A" title="REGISTER" onPress={regrisUser} />
+          <Button color="#EFC81A" title="REGISTER" onPress={checkTextInput} />
         </View>
         <View
           style={[

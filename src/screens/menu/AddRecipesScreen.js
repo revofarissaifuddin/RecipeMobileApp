@@ -53,8 +53,7 @@ const AddRecipesScreen = ({navigation}) => {
     });
     return reset;
   }, [navigation]);
-  const postForm = e => {
-    e.preventDefault();
+  const postForm = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('descriptions', descriptions);
@@ -129,6 +128,24 @@ const AddRecipesScreen = ({navigation}) => {
       }
     });
   };
+
+  const checkTextInput = () => {
+    if (!title.trim()) {
+      alert('Please Enter Title');
+      return;
+    }
+    if (!descriptions.trim()) {
+      alert('Please Enter Ingredients');
+      return;
+    }
+    if (!category_id.trim()) {
+      alert('Please Enter Category');
+      return;
+    }
+    alert('Add New Recipes');
+    postForm();
+  };
+
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
       <ScrollView style={{height: '100%'}}>
@@ -187,7 +204,7 @@ const AddRecipesScreen = ({navigation}) => {
             />
           </View>
           <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
-            <Button color="#EFC81A" title="POST" onPress={postForm} />
+            <Button color="#EFC81A" title="POST" onPress={checkTextInput} />
             {add_menu.isError}
             {add_menu.isLoading && (
               <NativeBaseProvider>

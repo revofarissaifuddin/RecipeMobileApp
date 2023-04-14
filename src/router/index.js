@@ -396,13 +396,13 @@ export default function Router() {
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator>
-        {auth.data ?(
+        {auth.data ? (
           <Stack.Screen
             name="BottomNav"
             component={BottomNav}
             options={{headerShown: false}}
           />
-        ):(
+        ) : (
           <>
             <Stack.Screen
               name="SplashScreen"
@@ -446,36 +446,36 @@ export default function Router() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen
-              name="SearchRecipesScreen"
-              component={SearchRecipesScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="DetailIngredientsScreen"
-              component={DetailIngredientsScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="SaveLikeScreen"
-              component={SaveLikeScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="EditRecipesScreen"
-              component={EditRecipesScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
           </>
         )}
+        <Stack.Screen
+          name="SearchRecipesScreen"
+          component={SearchRecipesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="DetailIngredientsScreen"
+          component={DetailIngredientsScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditRecipesScreen"
+          component={EditRecipesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SaveLikeScreen"
+          component={SaveLikeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

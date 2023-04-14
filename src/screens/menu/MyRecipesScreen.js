@@ -29,7 +29,6 @@ const Loading = () => {
   );
 };
 
-
 const MyRecipesScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const menu = useSelector(state => state.menu);
@@ -44,7 +43,6 @@ const MyRecipesScreen = ({navigation}) => {
   }, [dispatch, token]);
   //delete menu
   const deleteData = id => {
-    Status();
     dispatch(deleteMenu(id, token), navigation.navigate('MyMenu'));
   };
   return (

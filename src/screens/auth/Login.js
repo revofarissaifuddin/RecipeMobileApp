@@ -33,8 +33,7 @@ const Login = ({navigation}) => {
   const auth = useSelector(state => state.auth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const postData = e => {
-    e.preventDefault();
+  const postData = () => {
     console.log(email);
     console.log(password);
     let data = {
@@ -42,6 +41,17 @@ const Login = ({navigation}) => {
       password,
     };
     dispatch(login(data), navigation.navigate('BottomNav'));
+  };
+  const checkTextInput = () => {
+    if (!email.match(/\S+@\S+\.\S+/)) {
+      alert('Please Enter Email');
+      return;
+    }
+    if (!password.trim()) {
+      alert('Please Enter password');
+      return;
+    }
+    postData();
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -100,8 +110,7 @@ const Login = ({navigation}) => {
           <Button
             color="#EFC81A"
             title="LOGIN"
-            // onPress={() => dispatch(login())}
-            onPress={postData}></Button>
+            onPress={checkTextInput}></Button>
         </View>
         {auth.isError && <Text>Login Failed</Text>}
         {auth.isLoading && (
