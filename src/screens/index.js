@@ -11,6 +11,7 @@ import SaveLikeScreen from './menu/SaveLikeScreen';
 import SearchRecipesScreen from './menu/SearchRecipesScreen';
 import ProfileScreen from './profile/ProfileScreen';
 import EditRecipesScreen from './menu/EditRecipesScreen';
+import SplashScreen from './splash/SplashScreen';
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   SearchRecipesScreen,
   ProfileScreen,
   EditRecipesScreen,
+  SplashScreen,
 };

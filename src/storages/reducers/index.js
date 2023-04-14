@@ -9,6 +9,8 @@ import delete_menu from "./deleteMenu";
 import myprofile from "./getMyProfile";
 import add_menu from "./addMenu";
 import updateMenu from "./updateMenu";
+import ForgotPwd from "./updatePassword";
+import ConfirmOtp from "./getConfirmOTP";
 const appReducers = combineReducers({
   auth,
   user_regris,
@@ -20,5 +22,7 @@ const appReducers = combineReducers({
   myprofile,
   add_menu,
   updateMenu,
+  ForgotPwd,
+  ConfirmOtp,
 });
 export default appReducers;

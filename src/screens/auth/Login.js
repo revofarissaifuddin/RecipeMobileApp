@@ -6,7 +6,6 @@ import {
   TextInput,
   Button,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -42,7 +41,7 @@ const Login = ({navigation}) => {
       email,
       password,
     };
-    dispatch(login(data));
+    dispatch(login(data), navigation.navigate('BottomNav'));
   };
   return (
     <SafeAreaView style={{flex: 1}}>

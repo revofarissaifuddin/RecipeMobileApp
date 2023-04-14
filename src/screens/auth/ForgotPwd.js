@@ -7,9 +7,21 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import { forgotPassword } from '../../storages/actions/auth';
+import {useDispatch} from 'react-redux';
 
-const ForgotPwd = () => {
+const ForgotPwd = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const postData = e => {
+    e.preventDefault();
+    console.log(email);
+    let data = {
+      email
+    };
+    dispatch(forgotPassword(data), navigation.navigate('SendOtp'));
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
@@ -30,11 +42,13 @@ const ForgotPwd = () => {
             style={styles.input}
             placeholder="examplexxx@gmail.com"
             underlineColorAndroid="transparent"
+            value={email}
+            onChangeText={value => setEmail(value, 'email')}
           />
         </View>
       </View>
       <View style={styles.btn}>
-        <Button color="#EFC81A" title="Reset Password" />
+        <Button color="#EFC81A" title="Reset Password" onPress={postData} />
       </View>
     </SafeAreaView>
   );

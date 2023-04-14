@@ -1,24 +1,40 @@
-import {Text, View} from 'react-native';
-import React, {useEffect} from 'react';
-import {LogoApp} from '../../assets/logoApp-img.png';
+import React from 'react';
+import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
+
 const SplashScreen = ({navigation}) => {
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Login');
-    }, 4000);
-  }, []);
+  setTimeout(() => {
+    navigation.navigate('Login');
+  }, 3000)
   return (
     <View
       style={{
-        backgroundColor: '#EFC81A',
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'yellow',
       }}>
-      <LogoApp />
-      <Text style={{ color:'white',fontSize:32,fontFamily:'Poppins-Medium' }}>Recipes</Text>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#465bd8"
+      />
+      <Image
+        source={require('../../assets/logo-app.png')}
+        style={{width: 70, height: 70}}
+      />
+      <Text
+        style={{
+          fontFamily: 'OpenSans-Bold',
+          fontSize: 30,
+          color: 'white',
+        }}>
+        Recipes App
+      </Text>
     </View>
   );
 };
 
 export default SplashScreen;
+
+const styles = StyleSheet.create({});

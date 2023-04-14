@@ -8,10 +8,10 @@ import {
   Button,
   TouchableOpacity,
   PermissionsAndroid,
-  Image
+  Image,
 } from 'react-native';
-import React, { useState } from 'react';
-import {launchImageLibrary} from 'react-native-image-picker'
+import React, {useEffect, useState} from 'react';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {addMenu} from '../../storages/actions/menu';
@@ -44,6 +44,15 @@ const AddRecipesScreen = ({navigation}) => {
   const [category_id, setCategory_id] = useState('');
   const [response, setResponse] = useState(null);
   const [data, setData] = useState(null);
+  useEffect(() => {
+    const reset = navigation.addListener('focus', () => {
+      setTitle('');
+      setDescriptions('');
+      setCategory_id('');
+      setResponse('');
+    });
+    return reset;
+  }, [navigation]);
   const postForm = e => {
     e.preventDefault();
     const formData = new FormData();
@@ -55,7 +64,7 @@ const AddRecipesScreen = ({navigation}) => {
       name: response.assets[0].fileName,
       type: response.assets[0].type,
     });
-    setData(dispatch(addMenu(formData, token)), navigation.navigate('MyMenu'));
+    setData(dispatch(addMenu(formData, token), navigation.navigate('MyMenu')));
   };
   const requestPermission = async () => {
     try {
@@ -179,6 +188,7 @@ const AddRecipesScreen = ({navigation}) => {
           </View>
           <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
             <Button color="#EFC81A" title="POST" onPress={postForm} />
+            {add_menu.isError}
             {add_menu.isLoading && (
               <NativeBaseProvider>
                 <Center flex={1} px="3">
@@ -186,7 +196,6 @@ const AddRecipesScreen = ({navigation}) => {
                 </Center>
               </NativeBaseProvider>
             )}
-            {add_menu.isError}
           </View>
         </View>
       </ScrollView>

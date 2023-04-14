@@ -35,3 +35,35 @@ export const regUser = (data) => async (dispatch, getState) => {
     console.log(err);
   }
 };
+
+export const forgotPassword = (data) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: 'FORGOT_PASSWORD_PENDING' });
+    const result = await axios.put(url + `/users/send-otp`, data);
+    const ForgotPwd = result.data.data;
+    dispatch({ type: 'FORGOT_PASSWORD_SUCCESS', payload: ForgotPwd });
+  } catch (err) {
+    dispatch({
+      type: `FORGOT_PASSWORD_FAILED`,
+      payload: err.respons.data.message,
+    });
+    console.log('loginUser error');
+    console.log(err);
+  }
+};
+
+export const confirmOtp = data => async (dispatch, getState) => {
+  try {
+    dispatch({type: 'CONF_OTP_PENDING'});
+    const result = await axios.get(url + `/users/otp/confirm`, data);
+    const ConfirmOtp = result.data.data;
+    dispatch({type: 'CONF_OTP_SUCCESS', payload: ConfirmOtp});
+  } catch (err) {
+    dispatch({
+      type: `CONF_OTP_FAILED`,
+      payload: err.respons.data.message,
+    });
+    console.log('Confirm error');
+    console.log(err);
+  }
+};

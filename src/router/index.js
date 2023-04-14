@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,11 +10,10 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
-  RefreshControl,
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   Login,
   Register,
@@ -28,31 +27,27 @@ import {
   DetailIngredientsScreen,
   SaveLikeScreen,
   EditRecipesScreen,
+  SplashScreen,
 } from '../screens';
-import { newMenu } from '../storages/actions/menu';
+import {newMenu} from '../storages/actions/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
-function HomeScreen({ navigation }) {
+function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const new_Menu = useSelector(state => state.newMenu);
-  const { height, width } = Dimensions.get('window');
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+  const {height, width} = Dimensions.get('window');
 
   //get new recipe
   useEffect(() => {
-    dispatch(newMenu());
+    const reset = navigation.addListener('focus', () => {
+      dispatch(newMenu());
+    });
+    return reset;
   }, [dispatch]);
 
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      <ScrollView style={{ height: '100%' }}yyyy>
+      <ScrollView style={{height: '100%'}} yyyy>
         <View style={{flex: 1, alignItems: 'center'}}>
           <View style={{marginTop: '5%', padding: 10}}>
             <TouchableOpacity style={styles.sectionStyle}>
@@ -308,7 +303,7 @@ function HomeScreen({ navigation }) {
                         </View>
                       );
                     }}
-                  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}/>
+                  />
                 </View>
               </View>
             </View>
@@ -347,67 +342,75 @@ const styles = StyleSheet.create({
 });
 const BottomNav = () => {
   return (
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: 'orange',
-          tabBarShowLabel: false,
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: 'orange',
+        tabBarShowLabel: false,
+      }}
+      initialRouteName="Home">
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name="home-outline" color={color} size={size} />
+          ),
         }}
-        initialRouteName="Home">
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="home-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="AddRecipe"
-          component={AddRecipesScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="add-circle-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="MyMenu"
-          component={MyRecipesScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="receipt-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="person-outline" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+      />
+      <Tab.Screen
+        name="AddRecipe"
+        component={AddRecipesScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name="add-circle-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MyMenu"
+        component={MyRecipesScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name="receipt-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name="person-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
-export default function Router(){
-    const auth = useSelector((state)=>state.auth)
-    return (
-      <NavigationContainer independent={true}>
-        <Stack.Navigator>
-          {auth.data ? (
+export default function Router() {
+  const auth = useSelector(state => state.auth);
+  return (
+    <NavigationContainer independent={true}>
+      <Stack.Navigator>
+        {auth.data ?(
+          <Stack.Screen
+            name="BottomNav"
+            component={BottomNav}
+            options={{headerShown: false}}
+          />
+        ):(
+          <>
             <Stack.Screen
-              name="BottomNav"
-              component={BottomNav}
-              options={{headerShown: false}}
+              name="SplashScreen"
+              component={SplashScreen}
+              options={{
+                headerShown: false,
+              }}
             />
-          ) : (
             <Stack.Screen
               name="Login"
               component={Login}
@@ -415,64 +418,65 @@ export default function Router(){
                 headerShown: false,
               }}
             />
-          )}
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ResetPwd"
-            component={ResetPwd}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="SendOtp"
-            component={SendOtp}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ForgotPwd"
-            component={ForgotPwd}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="SearchRecipesScreen"
-            component={SearchRecipesScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="DetailIngredientsScreen"
-            component={DetailIngredientsScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="SaveLikeScreen"
-            component={SaveLikeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="EditRecipesScreen"
-            component={EditRecipesScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ResetPwd"
+              component={ResetPwd}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="SendOtp"
+              component={SendOtp}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="ForgotPwd"
+              component={ForgotPwd}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="SearchRecipesScreen"
+              component={SearchRecipesScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="DetailIngredientsScreen"
+              component={DetailIngredientsScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="SaveLikeScreen"
+              component={SaveLikeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="EditRecipesScreen"
+              component={EditRecipesScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }

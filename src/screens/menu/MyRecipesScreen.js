@@ -6,11 +6,29 @@ import {
   Button,
   Image,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getMenu, deleteMenu} from '../../storages/actions/menu';
+import {
+  Spinner,
+  HStack,
+  Heading,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
+
+const Loading = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="primary.500" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
+
 
 const MyRecipesScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -19,10 +37,14 @@ const MyRecipesScreen = ({navigation}) => {
   const token = useSelector(state => state.auth.data.data.token);
   //get My recipe
   useEffect(() => {
-    dispatch(getMenu(token));
+    const reset = navigation.addListener('focus', () => {
+      dispatch(getMenu(token));
+    });
+    return reset;
   }, [dispatch, token]);
   //delete menu
   const deleteData = id => {
+    Status();
     dispatch(deleteMenu(id, token), navigation.navigate('MyMenu'));
   };
   return (
@@ -34,8 +56,14 @@ const MyRecipesScreen = ({navigation}) => {
               <Text style={styles.title}>My Recipe</Text>
             </View>
             <View style={{marginTop: '5%'}}>
-              {menu.isLoading && <ActivityIndicator />}
-              {menu.isError}
+              {menu.isError && <Text>Get Recipes Failed</Text>}
+              {menu.isLoading && (
+                <NativeBaseProvider>
+                  <Center flex={1} px="3">
+                    <Loading />
+                  </Center>
+                </NativeBaseProvider>
+              )}
               <View style={{marginTop: '1%'}}>
                 <FlatList
                   data={menu.data}
