@@ -124,6 +124,23 @@ const EditRecipesScreen = ({route,navigation}) => {
       }
     });
   };
+
+  const checkTextInput = () => {
+    if (!title.trim()) {
+      alert('Please Enter Title');
+      return;
+    }
+    if (!descriptions.trim()) {
+      alert('Please Enter Ingredients');
+      return;
+    }
+    if (!category_id.trim()) {
+      alert('Please Enter Category');
+      return;
+    }
+    alert('Add New Recipes');
+    postForm();
+  };
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
       <ScrollView style={{height: '100%'}}>
@@ -182,7 +199,7 @@ const EditRecipesScreen = ({route,navigation}) => {
             />
           </View>
           <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
-            <Button color="#EFC81A" title="UPDATE" onPress={postForm} />
+            <Button color="#EFC81A" title="UPDATE" onPress={checkTextInput} />
             {update_menu.isError && <Text>Update Failed</Text>}
             {update_menu.isLoading && (
               <NativeBaseProvider>

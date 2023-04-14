@@ -1,3 +1,4 @@
+import HomeScreen from './menu/HomeScreen';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import ForgotPwd from './auth/ForgotPwd';
@@ -14,6 +15,7 @@ import EditRecipesScreen from './menu/EditRecipesScreen';
 import SplashScreen from './splash/SplashScreen';
 
 export {
+  HomeScreen,
   Login,
   Register,
   ForgotPwd,

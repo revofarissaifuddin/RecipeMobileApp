@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  TextInput,
   ScrollView,
   SafeAreaView,
   FlatList,
@@ -12,30 +11,36 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {newMenu} from '../../storages/actions/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ProfileScreen from '../profile/ProfileScreen';
-import AddRecipesScreen from './AddRecipesScreen';
-import MyRecipesScreen from './MyRecipesScreen';
+import {useDispatch, useSelector} from 'react-redux';
 function HomeScreen({navigation}) {
+  const dispatch = useDispatch();
+  const new_Menu = useSelector(state => state.newMenu);
   const {height, width} = Dimensions.get('window');
+
+  //get new recipe
+  useEffect(() => {
+    const reset = navigation.addListener('focus', () => {
+      dispatch(newMenu());
+    });
+    return reset;
+  }, [dispatch]);
+
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      <ScrollView style={{height: '100%'}}>
+      <ScrollView style={{height: '100%'}} yyyy>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <View style={{marginTop: '5%'}}>
-            <View style={styles.sectionStyle}>
+          <View style={{marginTop: '5%', padding: 10}}>
+            <TouchableOpacity style={styles.sectionStyle}>
               <Icon style={styles.searchOutline} name="search-outline"></Icon>
               <Text
                 style={styles.input}
                 placeholder="Search Pasta, Bread , etc"
-                underlineColorAndroid="transparent"
-                onPress={() => navigation.navigate('ForgotPwd')}>
+                onPress={() => navigation.navigate('SearchRecipesScreen')}>
                 Search Pasta, Bread , etc
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={{padding: 10}}>
               <View style={{width: '100%'}}>
                 <View style={{width: '90%'}}>
@@ -217,7 +222,7 @@ function HomeScreen({navigation}) {
               <View style={{width: '100%'}}>
                 <View style={{width: '90%'}}>
                   <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                    Popular For You
+                    New For You
                   </Text>
                 </View>
               </View>
@@ -226,14 +231,15 @@ function HomeScreen({navigation}) {
               <View style={{width: '100%'}}>
                 <View>
                   <FlatList
-                    data={[1, 1, 1, 1, 1]}
+                    data={new_Menu.data}
+                    keyExtractor={item => item.id}
                     horizontal
                     renderItem={({item, index}) => {
                       return (
                         <View
                           style={{
                             width: width / 2,
-                            height: height / 6,
+                            height: height / 5,
                             alignItems: 'center',
                             justifyContent: 'center',
                             backgroundColor: 'white',
@@ -243,11 +249,16 @@ function HomeScreen({navigation}) {
                               width: '90%',
                               height: '100%',
                               borderRadius: 10,
-                            }}>
+                            }}
+                            onPress={() =>
+                              navigation.navigate(`DetailIngredientsScreen`, {
+                                itemId: `${item.id}`,
+                              })
+                            }>
                             <ImageBackground
-                              source={require('../../assets/bg-detail.png')}
+                              source={{uri: `${item.photo}`}}
+                              // source={require('../assets/bg-detail.png')}
                               style={{
-                                borderRadius: 10,
                                 height: Dimensions.get('window').height / 10,
                                 padding: 10,
                               }}></ImageBackground>
@@ -259,7 +270,7 @@ function HomeScreen({navigation}) {
                                 alignContent: 'center',
                               }}>
                               <Text style={{color: 'black', width: '80%'}}>
-                                Sandwich with Egg
+                                {item.title}
                               </Text>
                               <Text
                                 style={{
@@ -267,7 +278,7 @@ function HomeScreen({navigation}) {
                                   width: '80%',
                                   fontSize: 10,
                                 }}>
-                                Sandwich with Egg
+                                {item.category}
                               </Text>
                             </View>
                           </TouchableOpacity>
@@ -284,16 +295,14 @@ function HomeScreen({navigation}) {
     </SafeAreaView>
   );
 }
-const Tab = createBottomTabNavigator();
 const styles = StyleSheet.create({
   sectionStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
     borderRadius: 10,
     margin: 10,
     width: '90%',
+    alignContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#EFEFEF',
   },
   input: {
@@ -301,7 +310,9 @@ const styles = StyleSheet.create({
     width: '70%',
     height: 40,
     borderColor: '#EFC81A',
-    color: '#EFC81A',
+    backgroundColor: '#EFEFEF',
+    padding: 10,
+    color: '#808080',
   },
   searchOutline: {
     fontSize: 20,
@@ -309,55 +320,4 @@ const styles = StyleSheet.create({
     marginEnd: 10,
   },
 });
-export default function Home() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: 'orange',
-          tabBarShowLabel: false,
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="home-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="AddRecipe"
-          component={AddRecipesScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="add-circle-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="MyMenu"
-          component={MyRecipesScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="receipt-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Icon name="person-outline" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
+export default HomeScreen;

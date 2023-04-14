@@ -10,7 +10,24 @@ import {
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { regUser } from '../../storages/actions/auth';
+import {
+  Spinner,
+  HStack,
+  Heading,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
 
+const Loading = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="primary.500" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
 const Register = ({ navigation }) => {
   const dispatch = useDispatch();
   const user_regris = useSelector(state => state.user_regris);
@@ -109,6 +126,14 @@ const Register = ({ navigation }) => {
         <View style={styles.btnLogin}>
           <Button color="#EFC81A" title="REGISTER" onPress={checkTextInput} />
         </View>
+        {user_regris.isError && <Text>Register Failed</Text>}
+        {user_regris.isLoading && (
+          <NativeBaseProvider>
+            <Center flex={1} px="3">
+              <Loading />
+            </Center>
+          </NativeBaseProvider>
+        )}
         <View
           style={[
             styles.justifyContentCenter,
@@ -125,7 +150,6 @@ const Register = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
