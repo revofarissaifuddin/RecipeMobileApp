@@ -21,3 +21,5 @@ export const getProfile = token => async dispatch => {
     console.log(err);
   }
 };
+//screens edit profile
+

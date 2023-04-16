@@ -23,7 +23,7 @@ const Loading = () => {
     <HStack space={2} justifyContent="center">
       <Spinner accessibilityLabel="Loading posts" />
       <Heading color="primary.500" fontSize="md">
-        Loading
+        Loading.....
       </Heading>
     </HStack>
   );
@@ -34,8 +34,6 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const postData = () => {
-    console.log(email);
-    console.log(password);
     let data = {
       email,
       password,
@@ -64,7 +62,7 @@ const Login = ({navigation}) => {
               borderRadius: 35,
               marginTop: -220,
             }}
-            source={require('../../assets/auth-image.png')}
+            source={require('../../assets/bg-detail.png')}
           />
         </View>
         <View style={styles.justifyContentCenter}>

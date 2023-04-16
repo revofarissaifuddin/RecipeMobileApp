@@ -69,7 +69,7 @@ const Register = ({ navigation }) => {
               marginTop: -220,
               borderRadius: 35,
             }}
-            source={require('../../assets/auth-image.png')}
+            source={require('../../assets/bg-detail.png')}
           />
         </View>
         <View style={styles.justifyContentCenter}>

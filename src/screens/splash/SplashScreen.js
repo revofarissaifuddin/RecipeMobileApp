@@ -26,8 +26,9 @@ const SplashScreen = ({navigation}) => {
       <Text
         style={{
           fontFamily: 'OpenSans-Bold',
-          fontSize: 30,
+          fontSize: 35,
           color: 'white',
+          fontWeight:'bold'
         }}>
         Recipes App
       </Text>
