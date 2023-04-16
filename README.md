@@ -42,6 +42,13 @@ deploy whit aab and apk
 
 | Splash Screen                                                | Login Screen                                              | Regrister Screen                                              |Forgot Password Screen                                              |
 | --------------------------------------------------------- | --------------------------------------------------------- |--------------------------------------------------------- |--------------------------------------------------------- |
-| ![Spalsh Screen](/public/image/SplashScreenRecipes.png ) | ![Login Screen](/public/image/LoginScreen.png) | ![Register Screen](/public/image/RegristerScreen.png) | ![Forgot Password Screen](/public/image/ForgotPwdScreen.png) |
-
+| ![Spalsh Screen](/public/image/SplashScreenRecipes.png?raw=true ) | ![Login Screen](/public/image/LoginScreen.png) | ![Register Screen](/public/image/RegristerScreen.png) | ![Forgot Password Screen](/public/image/ForgotPwdScreen.png) |
+| Splash Screen                                                | Login Screen                                              | Regrister Screen                                              |Forgot Password Screen                                              |
+|
+| ![Home Screen](/public/image/HomeScreen.png ) | ![Search Screen](/public/image/SearchScreen.png) | ![Detail Screen](/public/image/DetailMenuScreen.png) | ![MyMenu Screen](/public/image/MyRecipeScreen.png) |
+|
+| Add Screen                                                | Update Screen                                              | Profile Screen                                              |
+|
+| ![Add Screen](/public/image/AddRecipeScreen.png ) | ![Update Screen](/public/image/UpdateScreen.png) | ![Profile Screen](/public/image/ProfileScreen.png) |
+|
 
