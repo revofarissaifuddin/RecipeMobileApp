@@ -40,8 +40,8 @@ deploy whit aab and apk
 
 ## Tampilan UI App
 
-| Splash Screen                                                | Login Screen                                              |
-| --------------------------------------------------------- | --------------------------------------------------------- |
-| ![Spalsh Screen](/public/image/SplashScreenRecipes.png ) | ![Login Screen](/public/image/LoginScreen.png "Login Screen") |
+| Splash Screen                                                | Login Screen                                              | Regrister Screen                                              |Forgot Password Screen                                              |
+| --------------------------------------------------------- | --------------------------------------------------------- |--------------------------------------------------------- |--------------------------------------------------------- |
+| ![Spalsh Screen](/public/image/SplashScreenRecipes.png ) | ![Login Screen](/public/image/LoginScreen.png) | ![Register Screen](/public/image/RegristerScreen.png) | ![Forgot Password Screen](/public/image/ForgotPwdScreen.png) |
 
 
