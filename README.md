@@ -42,6 +42,6 @@ deploy whit aab and apk
 
 | Splash Screen                                                | Login Screen                                              |
 | --------------------------------------------------------- | --------------------------------------------------------- |
-| ![Spalsh Screen](https://drive.google.com/file/d/1rEAEzRXs3JZGl6-ObiyeIgsfpexqS0ls/view?usp=sharing?raw=true ) | ![Login Screen](https://drive.google.com/file/d/1_09CyEIijwK_VjTUA0MFP7jtsRbCp5Da/view?usp=sharing "Login Screen") |
+| ![Spalsh Screen](/public/image/SplashScreenRecipes.png ) | ![Login Screen](/public/image/LoginScreen.png "Login Screen") |
 
 
