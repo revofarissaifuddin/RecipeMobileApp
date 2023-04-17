@@ -33,7 +33,7 @@ deploy with aab and apk
 #### Release AAB
 - [AAB](https://drive.google.com/drive/folders/1sA7HCor3gepImLBqVj0fi3oKeMax_ECu?usp=sharing)
 #### Release APK
-- [AAB](https://drive.google.com/drive/folders/1ApjWfHALJCim9BIGWpjMJ0MEVVMzbhRR?usp=sharing)
+- [APK](https://drive.google.com/drive/folders/1ApjWfHALJCim9BIGWpjMJ0MEVVMzbhRR?usp=sharing)
 
 ## Authors
 - [@revfs](https://github.com/revofarissaifuddin/)
