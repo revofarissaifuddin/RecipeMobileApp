@@ -23,6 +23,10 @@ import {
   Center,
   NativeBaseProvider,
 } from 'native-base';
+import axios from 'axios';
+import {ONESIGNAL_APP_ID, API_KEY_ONESIGNAL} from '@env';
+const oneSignalId = ONESIGNAL_APP_ID;
+const keyOnesignal = API_KEY_ONESIGNAL;
 
 const Loading = () => {
   return (
@@ -64,6 +68,30 @@ const AddRecipesScreen = ({navigation}) => {
       type: response.assets[0].type,
     });
     setData(dispatch(addMenu(formData, token), navigation.navigate('MyMenu')));
+    const options = {
+      method: 'POST',
+      url: 'https://onesignal.com/api/v1/notifications',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Basic ${keyOnesignal}`,
+        'content-type': 'application/json',
+      },
+      data: {
+        included_segments: 'Subscribed Users',
+        app_id: `${oneSignalId}`,
+        headings: {en: `${title} New Recipes`},
+        contents: {en: 'Check it out now!'},
+        name: 'INTERNAL_CAMPAIGN_NAME',
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
   const requestPermission = async () => {
     try {

@@ -96,7 +96,7 @@ export const deleteMenu = (id, token) => async dispatch => {
 
 //add menu
 export const addMenu = (data, token) => async dispatch => {
-  try {
+  try {     
     let headers = {
       headers: {
         'Content-Type': 'multipart/form-data',
