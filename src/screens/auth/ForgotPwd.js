@@ -14,13 +14,20 @@ import {useDispatch} from 'react-redux';
 const ForgotPwd = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const postData = e => {
-    e.preventDefault();
-    console.log(email);
+  const postData = () => {
     let data = {
       email
     };
-    dispatch(forgotPassword(data), navigation.navigate('SendOtp'));
+    dispatch(forgotPassword(data), navigation.navigate('SendOtp',{
+            itemEmail: email,
+          }));
+  };
+  const checkTextInput = () => {
+    if (!email.match(/\S+@\S+\.\S+/)) {
+      alert('Please Enter Email');
+      return;
+    }
+    postData();
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -48,7 +55,11 @@ const ForgotPwd = ({navigation}) => {
         </View>
       </View>
       <View style={styles.btn}>
-        <Button color="#EFC81A" title="Reset Password" onPress={postData} />
+        <Button
+          color="#EFC81A"
+          title="Reset Password"
+          onPress={checkTextInput}
+        />
       </View>
     </SafeAreaView>
   );

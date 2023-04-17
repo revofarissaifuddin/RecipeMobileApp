@@ -67,3 +67,19 @@ export const confirmOtp = data => async (dispatch, getState) => {
     console.log(err);
   }
 };
+
+export const resetPassword = data => async (dispatch, getState) => {
+  try {
+    dispatch({type: 'RESET_PASSWORD_PENDING'});
+    const result = await axios.put(url + `/users/reset`, data);
+    const user_resetPwd = result.data.data;
+    dispatch({type: 'RESET_PASSWORD_SUCCESS', payload: user_resetPwd});
+  } catch (err) {
+    dispatch({
+      type: `RESET_PASSWORD_FAILED`,
+      payload: err.respons.data.message,
+    });
+    console.log('error');
+    console.log(err);
+  }
+};

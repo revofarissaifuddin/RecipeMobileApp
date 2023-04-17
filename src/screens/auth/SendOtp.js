@@ -5,23 +5,28 @@ import {
   SafeAreaView,
   Image,
   Button,
-  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import { confirmOtp } from '../../storages/actions/auth';
+// import {confirmOtp} from '../../storages/actions/auth';
 const SendOtp = ({navigation}) => {
   const dispatch = useDispatch();
+  {/* const [otp, setOtp] = useState('');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const postData = e => {
-    e.preventDefault();
+  const postData = () => {
     let data = {
       email,
       otp,
     };
-    dispatch(confirmOtp(data), navigation.navigate('SendOtp'));
+    dispatch(confirmOtp(data), navigation.navigate('ResetPwd'));
   };
+  const checkTextInput = () => {
+    if (!otp.trim()) {
+      alert('Please Enter Otp');
+      return;
+    }
+    postData();
+  }; */}
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
@@ -31,10 +36,10 @@ const SendOtp = ({navigation}) => {
             Request for reset password send in your email
           </Text>
         </View>
-        <View style={styles.sectionStyle}>
+        {/* <View style={styles.sectionStyle}>
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder="examplexxx@gmail.com"
             underlineColorAndroid="transparent"
             value={email}
             onChangeText={value => setEmail(value, 'email')}
@@ -48,9 +53,13 @@ const SendOtp = ({navigation}) => {
             value={otp}
             onChangeText={value => setOtp(value, 'otp')}
           />
-        </View>
+        </View> */}
         <View style={styles.btn}>
-          <Button color="#EFC81A" title="Send OTP" onPress={postData} />
+          <Button
+            color="#EFC81A"
+            title="Send OTP"
+            onPress={() => navigation.navigate('ResetPwd')}
+          />
         </View>
       </View>
     </SafeAreaView>
