@@ -6,6 +6,8 @@ import {
   Button,
   Image,
   FlatList,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -23,7 +25,7 @@ const Loading = () => {
     <HStack space={2} justifyContent="center">
       <Spinner accessibilityLabel="Loading posts" />
       <Heading color="primary.500" fontSize="md">
-        Loading
+        Loading.......
       </Heading>
     </HStack>
   );
@@ -34,6 +36,15 @@ const MyRecipesScreen = ({navigation}) => {
   const menu = useSelector(state => state.menu);
   const delete_menu = useSelector(state => state.delete_menu);
   const token = useSelector(state => state.auth.data.data.token);
+  //refresh control
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      dispatch(getMenu(token));
+    }, 1500);
+  }, []);
   //get My recipe
   useEffect(() => {
     const reset = navigation.addListener('focus', () => {
@@ -45,14 +56,20 @@ const MyRecipesScreen = ({navigation}) => {
   const deleteData = id => {
     dispatch(deleteMenu(id, token), navigation.navigate('MyMenu'));
   };
+
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
-      <View style={{height: '100%'}}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.title}>My Recipe</Text>
+      </View>
+      <ScrollView
+        style={{height: '100%'}}
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View style={{flex: 1, alignItems: 'center'}}>
           <View style={{marginTop: '1%', alignItems: 'center'}}>
-            <View>
-              <Text style={styles.title}>My Recipe</Text>
-            </View>
             <View style={{marginTop: '5%'}}>
               {menu.isError && <Text>Get Recipes Failed</Text>}
               {menu.isLoading && (
@@ -130,7 +147,7 @@ const MyRecipesScreen = ({navigation}) => {
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
