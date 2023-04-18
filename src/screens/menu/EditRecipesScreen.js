@@ -45,8 +45,7 @@ const EditRecipesScreen = ({route,navigation}) => {
   const [response, setResponse] = useState(null);
   const [data, setData] = useState(null);
   const {itemId} = route.params;
-  const postForm = e => {
-    e.preventDefault();
+  const postForm = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('descriptions', descriptions);
@@ -138,7 +137,7 @@ const EditRecipesScreen = ({route,navigation}) => {
       alert('Please Enter Category');
       return;
     }
-    alert('Add New Recipes');
+    alert('Update New Recipes');
     postForm();
   };
   return (
