@@ -7,6 +7,7 @@ import {
   TextInput,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,19 +26,30 @@ const Loading = () => {
     <HStack space={2} justifyContent="center">
       <Spinner accessibilityLabel="Loading posts" />
       <Heading color="primary.500" fontSize="md">
-        Loading
+        Loading.....
       </Heading>
     </HStack>
   );
 };
-const SearchRecipesScreen = ({navigation}) => {
+const SearchRecipesScreen = ({ navigation }) => {
   const [search_Menu, setSearchMenu] = useState('');
   const search_menu = useSelector(state => state.search_menu);
   const dispatch = useDispatch();
+  const [pageCurrent, setpageCurrent] = useState(1);
 
   useEffect(() => {
-    dispatch(searchMenu(search_Menu));
-  }, [search_Menu]);
+    dispatch(searchMenu(search_Menu, pageCurrent));
+  }, [search_Menu, pageCurrent]);
+
+  const handlePreviousPage = () => {
+    console.log('previous page clicked', pageCurrent);
+    setpageCurrent(pageCurrent - 1 < 1 ? 1 : pageCurrent - 1);
+  };
+
+  const handleNextPage = () => {
+    console.log('next page clicked', pageCurrent);
+    setpageCurrent(pageCurrent + 1);
+  };
   return (
     <SafeAreaView style={{flex: 1, width: '100%', height: '100%'}}>
       <View style={{flex: 1, alignItems: 'center'}}>
@@ -53,90 +65,109 @@ const SearchRecipesScreen = ({navigation}) => {
             />
           </View>
           {search_menu.isError && <Text>Get Menu Failed</Text>}
-          {search_menu.isLoading && (
+          {search_menu.isLoading ? (
             <NativeBaseProvider>
               <Center flex={1} px="3">
                 <Loading />
               </Center>
             </NativeBaseProvider>
-          )}
-          <View
-            style={{
-              marginTop: '1%',
-              height: Dimensions.get('window').height / 1,
-            }}>
-            <View>
-              <FlatList
-                data={search_menu.data}
-                keyExtractor={item => item.id}
-                renderItem={({item}) => {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: '100%',
-                        backgroundColor: 'white',
-                        borderRadius: 15,
-                        padding: 10,
-                        marginTop: 10,
-                      }}>
-                      <View style={{width: '30%'}}>
-                        <Image
-                          style={{width: 100, height: 100, borderRadius: 15}}
-                          source={{uri: `${item.photo}`}}
-                        />
-                      </View>
-                      <View style={{width: '40%'}}>
-                        <View style={{marginStart: 0}}>
-                          <View>
-                            <Text
-                              style={{color: 'black', fontWeight: 'bold'}}
-                              onPress={() =>
-                                navigation.navigate(`DetailIngredientsScreen`, {
-                                  itemId: `${item.id}`,
-                                })
-                              }>
-                              {item.title}
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              marginTop: 10,
-                              alignItems: 'center',
-                            }}>
-                            <Icon
-                              style={{fontSize: 20, color: 'yellow'}}
-                              name="star-outline"
-                            />
-                            <Text style={{marginStart: 10}}>4.3</Text>
-                            <Icon
+          ) : (
+            <View
+              style={{
+                marginTop: '1%',
+                height: Dimensions.get('window').height / 1,
+              }}>
+              <View>
+                <FlatList
+                  data={search_menu.data}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => {
+                    return (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          width: '100%',
+                          backgroundColor: 'white',
+                          borderRadius: 15,
+                          padding: 10,
+                          marginTop: 10,
+                        }}>
+                        <View style={{width: '30%'}}>
+                          <Image
+                            style={{width: 100, height: 100, borderRadius: 15}}
+                            source={{uri: `${item.photo}`}}
+                          />
+                        </View>
+                        <View style={{width: '40%'}}>
+                          <View style={{marginStart: 0}}>
+                            <View>
+                              <Text
+                                style={{color: 'black', fontWeight: 'bold'}}
+                                onPress={() =>
+                                  navigation.navigate(
+                                    `DetailIngredientsScreen`,
+                                    {
+                                      itemId: `${item.id}`,
+                                    },
+                                  )
+                                }>
+                                {item.title}
+                              </Text>
+                            </View>
+                            <View
                               style={{
-                                fontSize: 10,
-                                color: 'black',
-                                marginLeft: 10,
-                              }}
-                              name="ellipse-outline"
-                            />
-                            <Text style={{marginStart: 10}}>
-                              {item.category}
-                            </Text>
+                                flexDirection: 'row',
+                                marginTop: 10,
+                                alignItems: 'center',
+                              }}>
+                              <Icon
+                                style={{fontSize: 20, color: 'yellow'}}
+                                name="star-outline"
+                              />
+                              <Text style={{marginStart: 10}}>4.3</Text>
+                              <Icon
+                                style={{
+                                  fontSize: 10,
+                                  color: 'black',
+                                  marginLeft: 10,
+                                }}
+                                name="ellipse-outline"
+                              />
+                              <Text style={{marginStart: 10}}>
+                                {item.category}
+                              </Text>
+                            </View>
                           </View>
                         </View>
                       </View>
-                    </View>
-                  );
-                }}
-              />
+                    );
+                  }}
+                />
+              </View>
             </View>
-          </View>
+          )}
+        </View>
+      </View>
+      <View style={{justifyContent: 'center', backgroundColor: 'white'}}>
+        <View style={styles.headerStyle}>
+          <View></View>
+          <TouchableOpacity onPress={() => handlePreviousPage()}>
+            <Icon
+              style={{width: 14, height: 25, fontSize: 20}}
+              name="chevron-back-outline"></Icon>
+          </TouchableOpacity>
+          <Text style={{marginLeft: 50,fontSize:15}}>Page {pageCurrent}</Text>
+          <TouchableOpacity onPress={() => handleNextPage()}>
+            <Icon
+              style={{width: 14, height: 25, fontSize: 20, marginLeft: 50}}
+              name="chevron-forward-outline"></Icon>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   sectionStyle: {
     flexDirection: 'row',
@@ -159,6 +190,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
     marginEnd: 10,
+  },
+  headerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom:10
   },
 });
 export default SearchRecipesScreen;

@@ -68,82 +68,90 @@ const MyRecipesScreen = ({navigation}) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <View style={{flex: 1, alignItems: 'center'}}>
+        <View style={({flex: 1, alignItems: 'center'})}>
           <View style={{marginTop: '1%', alignItems: 'center'}}>
             <View style={{marginTop: '5%'}}>
               {menu.isError && <Text>Get Recipes Failed</Text>}
-              {menu.isLoading && (
+              {menu.isLoading ? (
                 <NativeBaseProvider>
                   <Center flex={1} px="3">
                     <Loading />
                   </Center>
                 </NativeBaseProvider>
-              )}
-              <View style={{marginTop: '1%'}}>
-                <FlatList
-                  data={menu.data}
-                  keyExtractor={item => item.id}
-                  renderItem={({item}) => {
-                    return (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          width: '100%',
-                          backgroundColor: 'white',
-                          borderRadius: 10,
-                          padding: 10,
-                          marginTop: 15,
-                        }}>
-                        <View style={{width: '30%'}}>
-                          <Image
-                            style={{width: 100, height: 100, borderRadius: 20}}
-                            source={{uri: `${item.photo}`}}
-                          />
-                        </View>
-                        <View style={{width: '40%'}}>
-                          <View style={{marginStart: 0}}>
-                            <Text
-                              style={{color: 'black', fontWeight: 'bold'}}
-                              onPress={() =>
-                                navigation.navigate(`DetailIngredientsScreen`, {
-                                  itemId: `${item.id}`,
-                                })
-                              }>
-                              {item.title}
-                            </Text>
-                            <Text style={{color: 'black', marginTop: 10}}>
-                              {item.category}
-                            </Text>
+              ) : (
+                <View style={{marginTop: '1%'}}>
+                  <FlatList
+                    data={menu.data}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) => {
+                      return (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            width: '100%',
+                            backgroundColor: 'white',
+                            borderRadius: 10,
+                            padding: 10,
+                            marginTop: 15,
+                          }}>
+                          <View style={{width: '30%'}}>
+                            <Image
+                              style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: 20,
+                              }}
+                              source={{uri: `${item.photo}`}}
+                            />
                           </View>
-                        </View>
-                        <View style={{width: '20%'}}>
-                          <View style={{flexDirection: 'column'}}>
-                            <View>
-                              <Button
-                                color="#30C0F3"
-                                title="Edit"
+                          <View style={{width: '40%'}}>
+                            <View style={{marginStart: 0}}>
+                              <Text
+                                style={{color: 'black', fontWeight: 'bold',}}
                                 onPress={() =>
-                                  navigation.navigate(`EditRecipesScreen`, {
-                                    itemId: `${item.id}`,
-                                  })
-                                }
-                              />
+                                  navigation.navigate(
+                                    `DetailIngredientsScreen`,
+                                    {
+                                      itemId: `${item.id}`,
+                                    },
+                                  )
+                                }>
+                                {item.title}
+                              </Text>
+                              <Text style={{color: 'black', marginTop: 10}}>
+                                {item.category}
+                              </Text>
                             </View>
-                            <View style={{marginTop: 10}}>
-                              <Button
-                                color="#F57E71"
-                                title="Delete"
-                                onPress={() => deleteData(item.id)}
-                              />
+                          </View>
+                          <View style={{width: '25%'}}>
+                            <View style={{flexDirection: 'column'}}>
+                              <View>
+                                <Button
+                                  color="#30C0F3"
+                                  title="Edit"
+                                  onPress={() =>
+                                    navigation.navigate(`EditRecipesScreen`, {
+                                      itemId: `${item.id}`,
+                                    })
+                                  }
+                                />
+                              </View>
+                              <View style={{marginTop: 10}}>
+                                <Button
+                                  color="#F57E71"
+                                  title="Delete"
+                                  onPress={() => deleteData(item.id)}
+                                />
+                              </View>
                             </View>
                           </View>
                         </View>
-                      </View>
-                    );
-                  }}
-                />
-              </View>
+                      );
+                    }}
+                  />
+                </View>
+              )}
             </View>
           </View>
         </View>

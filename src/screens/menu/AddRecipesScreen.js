@@ -33,7 +33,7 @@ const Loading = () => {
     <HStack space={2} justifyContent="center">
       <Spinner accessibilityLabel="Loading posts" />
       <Heading color="primary.500" fontSize="md">
-        Loading
+        Loading.....
       </Heading>
     </HStack>
   );
@@ -181,67 +181,79 @@ const AddRecipesScreen = ({navigation}) => {
           <View>
             <Text style={styles.title}>Add Your Recipe</Text>
           </View>
-          <View style={{marginTop: '5%'}}>
-            <View style={styles.sectionStyle}>
-              <Icon style={styles.bookoutline} name="book-outline"></Icon>
-              <TextInput
-                style={styles.input}
-                placeholder="Title"
-                value={title}
-                onChangeText={value => setTitle(value, 'title')}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-          </View>
-          <View style={[styles.sectionInput, {height: 150}]}>
-            <TextInput
-              multiline={true}
-              numberOfLines={10}
-              placeholder="Ingredients"
-              value={descriptions}
-              onChangeText={value => setDescriptions(value, 'descriptions')}
-            />
-          </View>
-          <View style={[styles.sectionInput, {alignSelf: 'center'}]}>
-            <View style={{padding: 10}}>
-              <TouchableOpacity onPress={() => requestPermission()}>
-                <Text>Add Foto</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{marginTop: 10}}
-                onPress={() => galleryLaunch()}>
-                <Text>Gallery</Text>
-              </TouchableOpacity>
-              {response && (
-                <View style={{height: 200, width: 200, backgroundColor: 'red'}}>
-                  <Image
-                    resizeMode="cover"
-                    style={{height: 200, width: 200}}
-                    source={{uri: response?.assets[0].uri}}
+          {add_menu.isError && <Text>Login Failed</Text>}
+          {add_menu.isLoading ? (
+            <NativeBaseProvider>
+              <Center flex={1} px="3">
+                <Loading />
+              </Center>
+            </NativeBaseProvider>
+          ) : (
+            <>
+              <View style={{marginTop: '5%'}}>
+                <View style={styles.sectionStyle}>
+                  <Icon style={styles.bookoutline} name="book-outline"></Icon>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Title"
+                    value={title}
+                    onChangeText={value => setTitle(value, 'title')}
+                    underlineColorAndroid="transparent"
                   />
                 </View>
-              )}
-              <Text style={{color: 'black'}}>{data?.data?.message}</Text>
-            </View>
-          </View>
-          <View style={styles.sectionInput}>
-            <TextInput
-              placeholder="Category"
-              value={category_id}
-              onChangeText={value => setCategory_id(value, 'category_id')}
-            />
-          </View>
-          <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
-            <Button color="#EFC81A" title="POST" onPress={checkTextInput} />
-            {add_menu.isError}
-            {add_menu.isLoading && (
-              <NativeBaseProvider>
-                <Center flex={1} px="3">
-                  <Loading />
-                </Center>
-              </NativeBaseProvider>
-            )}
-          </View>
+              </View>
+              <View style={[styles.sectionInput, {height: 150}]}>
+                <TextInput
+                  multiline={true}
+                  numberOfLines={10}
+                  placeholder="Ingredients"
+                  value={descriptions}
+                  onChangeText={value => setDescriptions(value, 'descriptions')}
+                />
+              </View>
+              <View style={[styles.sectionInput, {alignSelf: 'center'}]}>
+                <View style={{padding: 10}}>
+                  <View style={[styles.sectionStyle, {alignContent: 'center'}]}>
+                    <TouchableOpacity onPress={() => requestPermission()}>
+                      <Text>Add Foto</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{marginLeft: 100}}
+                      onPress={() => galleryLaunch()}>
+                      <Text>Gallery</Text>
+                    </TouchableOpacity>
+                  </View>
+                  {response && (
+                    <View
+                      style={{
+                        height: 200,
+                        width: 200,
+                        backgroundColor: 'red',
+                          alignContent: 'center',
+                        justifyContent:'center'
+                      }}>
+                      <Image
+                        resizeMode="cover"
+                        style={{height: 200, width: 200}}
+                        source={{uri: response?.assets[0].uri}}
+                      />
+                    </View>
+                  )}
+                  <Text style={{color: 'black'}}>{data?.data?.message}</Text>
+                </View>
+              </View>
+              <View style={styles.sectionInput}>
+                <TextInput
+                  placeholder="Category"
+                  value={category_id}
+                  onChangeText={value => setCategory_id(value, 'category_id')}
+                />
+              </View>
+              <View style={{marginTop: '10%', width: 100, marginBottom: 20}}>
+                <Button color="#EFC81A" title="POST" onPress={checkTextInput} />
+              </View>
+            </>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

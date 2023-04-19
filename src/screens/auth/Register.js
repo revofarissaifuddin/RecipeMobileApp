@@ -23,7 +23,7 @@ const Loading = () => {
     <HStack space={2} justifyContent="center">
       <Spinner accessibilityLabel="Loading posts" />
       <Heading color="primary.500" fontSize="md">
-        Loading
+        Loading.....
       </Heading>
     </HStack>
   );
@@ -60,93 +60,102 @@ const Register = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <View>
-          <Image
-            style={{
-              width: 450,
-              height: 250,
-              marginTop: -220,
-              borderRadius: 35,
-            }}
-            source={require('../../assets/bg-detail.png')}
-          />
+      {user_regris.isError && <Text>Login Failed</Text>}
+      {user_regris.isLoading ? (
+        <NativeBaseProvider>
+          <Center flex={1} px="3">
+            <Loading />
+          </Center>
+        </NativeBaseProvider>
+      ) : (
+        <View style={styles.container}>
+          <View>
+            <Image
+              style={{
+                width: 450,
+                height: 250,
+                marginTop: -220,
+                borderRadius: 35,
+              }}
+              source={require('../../assets/bg-detail.png')}
+            />
+          </View>
+          <View style={styles.justifyContentCenter}>
+            <Text style={styles.title}>Welcome !</Text>
+            <Text>Log in to your exiting account.</Text>
+          </View>
+          <View style={styles.sectionStyle}>
+            <Image
+              source={require('../../assets/user.png')}
+              style={styles.imageStyle}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="myname"
+              value={name}
+              onChangeText={value => setName(value, 'name')}
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <Image
+              source={require('../../assets/user.png')}
+              style={styles.imageStyle}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="examplexxx@gmail.com"
+              value={email}
+              onChangeText={value => setEmail(value, 'email')}
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <Image
+              source={require('../../assets/lock.png')}
+              style={styles.imageStyle}
+            />
+            <TextInput
+              style={styles.input}
+              secureTextEntry
+              value={password}
+              onChangeText={value => setPassword(value, 'password')}
+              placeholder="Password"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View>
+            <Text
+              style={{marginStart: '45%'}}
+              onPress={() => navigation.navigate('ForgotPwd')}>
+              Forgot password?
+            </Text>
+          </View>
+          <View style={styles.btnLogin}>
+            <Button color="#EFC81A" title="REGISTER" onPress={checkTextInput} />
+          </View>
+          {user_regris.isError && <Text>Register Failed</Text>}
+          {user_regris.isLoading && (
+            <NativeBaseProvider>
+              <Center flex={1} px="3">
+                <Loading />
+              </Center>
+            </NativeBaseProvider>
+          )}
+          <View
+            style={[
+              styles.justifyContentCenter,
+              {flexDirection: 'row', marginTop: 20},
+            ]}>
+            <Text>Don't have an account? </Text>
+            <Text
+              style={{color: '#EFC81A'}}
+              onPress={() => navigation.navigate('Login')}>
+              sign In
+            </Text>
+          </View>
         </View>
-        <View style={styles.justifyContentCenter}>
-          <Text style={styles.title}>Welcome !</Text>
-          <Text>Log in to your exiting account.</Text>
-        </View>
-        <View style={styles.sectionStyle}>
-          <Image
-            source={require('../../assets/user.png')}
-            style={styles.imageStyle}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="myname"
-            value={name}
-            onChangeText={value => setName(value, 'name')}
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <Image
-            source={require('../../assets/user.png')}
-            style={styles.imageStyle}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="examplexxx@gmail.com"
-            value={email}
-            onChangeText={value => setEmail(value, 'email')}
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <Image
-            source={require('../../assets/lock.png')}
-            style={styles.imageStyle}
-          />
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            value={password}
-            onChangeText={value => setPassword(value, 'password')}
-            placeholder="Password"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <View>
-          <Text
-            style={{marginStart: '45%'}}
-            onPress={() => navigation.navigate('ForgotPwd')}>
-            Forgot password?
-          </Text>
-        </View>
-        <View style={styles.btnLogin}>
-          <Button color="#EFC81A" title="REGISTER" onPress={checkTextInput} />
-        </View>
-        {user_regris.isError && <Text>Register Failed</Text>}
-        {user_regris.isLoading && (
-          <NativeBaseProvider>
-            <Center flex={1} px="3">
-              <Loading />
-            </Center>
-          </NativeBaseProvider>
-        )}
-        <View
-          style={[
-            styles.justifyContentCenter,
-            {flexDirection: 'row', marginTop: 20},
-          ]}>
-          <Text>Don't have an account? </Text>
-          <Text
-            style={{color: '#EFC81A'}}
-            onPress={() => navigation.navigate('Login')}>
-            sign In
-          </Text>
-        </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };

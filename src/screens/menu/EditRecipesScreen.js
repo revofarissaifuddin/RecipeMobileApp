@@ -170,16 +170,25 @@ const EditRecipesScreen = ({route,navigation}) => {
           </View>
           <View style={[styles.sectionInput, {alignSelf: 'center'}]}>
             <View style={{padding: 10}}>
-              <TouchableOpacity onPress={() => requestPermission()}>
-                <Text>Add Foto</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{marginTop: 10}}
-                onPress={() => galleryLaunch()}>
-                <Text>Gallery</Text>
-              </TouchableOpacity>
+              <View style={[styles.sectionStyle, {alignContent: 'center'}]}>
+                <TouchableOpacity onPress={() => requestPermission()}>
+                  <Text>Add Foto</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{marginLeft: 100}}
+                  onPress={() => galleryLaunch()}>
+                  <Text>Gallery</Text>
+                </TouchableOpacity>
+              </View>
               {response && (
-                <View style={{height: 200, width: 200, backgroundColor: 'red'}}>
+                <View
+                  style={{
+                    height: 200,
+                    width: 200,
+                    backgroundColor: 'red',
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <Image
                     resizeMode="cover"
                     style={{height: 200, width: 200}}

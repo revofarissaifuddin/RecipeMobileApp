@@ -58,10 +58,12 @@ export const detailMenu = id => async dispatch => {
 };
 
 //screen search menu
-export const searchMenu = data => async dispatch => {
+export const searchMenu = (data,pageCurrent) => async dispatch => {
   try {
     dispatch({type: 'GET_MENU_PENDING'});
-    const result = await axios.get(url + `/recipes/all-recipe?search=${data}`);
+    const result = await axios.get(
+      url + `/recipes/all-recipe?search=${data}&limit=4&page=${pageCurrent}`,
+    );
     const menu = result.data.data;
     dispatch({type: 'GET_MENU_SUCCESS', payload: menu});
   } catch (err) {

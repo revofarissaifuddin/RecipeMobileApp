@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { login } from '../../storages/actions/auth';
+import {login} from '../../storages/actions/auth';
 import {
   Spinner,
   HStack,
@@ -53,84 +53,85 @@ const Login = ({navigation}) => {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <View style={{flex: 0.1}}>
-          <Image
-            style={{
-              width: 450,
-              height: 200,
-              borderRadius: 35,
-              marginTop: -220,
-            }}
-            source={require('../../assets/bg-detail.png')}
-          />
+      {auth.isError && <Text>Login Failed</Text>}
+      {auth.isLoading ? (
+        <NativeBaseProvider>
+          <Center flex={1} px="3">
+            <Loading />
+          </Center>
+        </NativeBaseProvider>
+      ) : (
+        <View style={styles.container}>
+          <View style={{flex: 0.1}}>
+            <Image
+              style={{
+                width: 450,
+                height: 200,
+                borderRadius: 35,
+                marginTop: -220,
+              }}
+              source={require('../../assets/bg-detail.png')}
+            />
+          </View>
+          <View style={styles.justifyContentCenter}>
+            <Text style={styles.title}>Welcome !</Text>
+            <Text>Log in to your exiting account.</Text>
+          </View>
+          <View style={styles.sectionStyle}>
+            <Image
+              source={require('../../assets/mail.png')}
+              style={styles.imageStyle}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="examplexxx@gmail.com"
+              value={email}
+              onChangeText={value => setEmail(value, 'email')}
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View style={styles.sectionStyle}>
+            <Image
+              source={require('../../assets/lock.png')}
+              style={styles.imageStyle}
+            />
+            <TextInput
+              style={styles.input}
+              secureTextEntry
+              value={password}
+              onChangeText={value => setPassword(value, 'password')}
+              label="Password"
+              placeholder="Password"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+          <View>
+            <Text
+              style={{marginStart: '45%'}}
+              onPress={() => navigation.navigate('ForgotPwd')}>
+              Forgot password?
+            </Text>
+          </View>
+          <View style={styles.btnLogin}>
+            <Button
+              color="#EFC81A"
+              title="LOGIN"
+              onPress={checkTextInput}></Button>
+          </View>
+          <View
+            style={[
+              styles.justifyContentCenter,
+              {flexDirection: 'row', marginTop: 20},
+            ]}>
+            <Text>Don't have an account? </Text>
+            <Text
+              style={{color: '#EFC81A'}}
+              onPress={() => navigation.navigate('Register')}>
+              sign Up
+            </Text>
+          </View>
         </View>
-        <View style={styles.justifyContentCenter}>
-          <Text style={styles.title}>Welcome !</Text>
-          <Text>Log in to your exiting account.</Text>
-        </View>
-        <View style={styles.sectionStyle}>
-          <Image
-            source={require('../../assets/mail.png')}
-            style={styles.imageStyle}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="examplexxx@gmail.com"
-            value={email}
-            onChangeText={value => setEmail(value, 'email')}
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <Image
-            source={require('../../assets/lock.png')}
-            style={styles.imageStyle}
-          />
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            value={password}
-            onChangeText={value => setPassword(value, 'password')}
-            label="Password"
-            placeholder="Password"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-        <View>
-          <Text
-            style={{marginStart: '45%'}}
-            onPress={() => navigation.navigate('ForgotPwd')}>
-            Forgot password?
-          </Text>
-        </View>
-        <View style={styles.btnLogin}>
-          <Button
-            color="#EFC81A"
-            title="LOGIN"
-            onPress={checkTextInput}></Button>
-        </View>
-        {auth.isError && <Text>Login Failed</Text>}
-        {auth.isLoading && (
-          <NativeBaseProvider>
-            <Center flex={1} px="3">
-              <Loading />
-            </Center>
-          </NativeBaseProvider>
-        )}
-        <View
-          style={[
-            styles.justifyContentCenter,
-            {flexDirection: 'row', marginTop: 20},
-          ]}>
-          <Text>Don't have an account? </Text>
-          <Text
-            style={{color: '#EFC81A'}}
-            onPress={() => navigation.navigate('Register')}>
-            sign Up
-          </Text>
-        </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };
