@@ -1,7 +1,55 @@
+<div>
+    <h1 align="center">Recipes<h1>
+    <br/>
+    <div align="center">
+        <a href="">
+            <img src="https://drive.google.com/uc?export=view&id=10V1R2CRJ0F72Y-5GsztD5hhwyG7DMZ9z" alt="Logo" width="150px">
+        </a>
+        <h2>Recipes App</h2>
+        <h6>
+            <a href="https://drive.google.com/drive/folders/1ApjWfHALJCim9BIGWpjMJ0MEVVMzbhRR?usp=sharing">View Demo ||</a>
+            <a href="https://github.com/revofarissaifuddin/recipes-fe-week6/issues">Report Bug ||</a>
+            <a href="https://github.com/revofarissaifuddin/recipes-fe-week6/issues">Request Feature</a>
+        </h6>
+    </div>
+</div>
+
+<br/>
 
 # React App Mobile
 
+## Table of Contents
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#build-packages-nodejs">Build Packages NodeJS</a></li>
+        <li><a href="#deployment">Deployment</a></li>
+        <li><a href="#authors">Authors</a></li>
+      </ul>
+    </li>
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#developer">Developer</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+## About The Project
+
 Recipes app merupakan aplikasi berbasis mobile yang menampilkan berbagai recipes makanan. Recipe app terdapat beberapa fitur dimana user atau pengguna dapat mencari recipe masakan, mendaftar sebagai user, menambahkan recipe, menghapus recipe, serta update recipe. Aplikasi Web recipes dibangun menggunakan axios, react-native, redux, redux-persist, react js, PostgreSql dan Express JS.
+
+## Built With
+Aplikasi ini dibangun dengan beberapa teknologi di bawah ini:
+- [Javascript](https://www.javascript.com/)
+- [React](https://reactjs.org/)
+- [React Native](https://reactnative.dev/)
+- [Redux](https://redux.js.org/)
+- [Axios](https://axios-http.com/)
 
 ## Build Packages NodeJS
 ```bash
@@ -38,7 +86,7 @@ deploy with aab and apk
 ## Authors
 - [@revfs](https://github.com/revofarissaifuddin/)
 
-## Tampilan UI App
+## Screenshots
 
 | Splash Screen                                                | Login Screen                                              | Regrister Screen                                              |Forgot Password Screen                                              |
 | --------------------------------------------------------- | --------------------------------------------------------- |--------------------------------------------------------- |--------------------------------------------------------- |
@@ -51,5 +99,41 @@ deploy with aab and apk
 | Add Screen                                                  | Update Screen                                              | Profile Screen                                        |                                          |
 | --------------------------------------------------------- | --------------------------------------------------------- |--------------------------------------------------------- |--------------------------------------------------------- |
 | ![Add Screen](/public/image/AddRecipeScreen.png ) | ![Update Screen](/public/image/UpdateScreen.png) | ![Profile Screen](/public/image/ProfileScreen.png) |
+
+
+## Contributing
+
+Kontribusi adalah apa yang membuat komunitas open source menjadi tempat yang luar biasa untuk belajar, menginspirasi, dan berkreasi.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Developer
+
+<center>
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/revofarissaifuddin">
+          <img width="200" src="https://drive.google.com/uc?export=view&id=1mkarUQzmqBSWD9t5uZQS3iqR3apOzLXF" alt="Fandi"><br/>
+          <sub><b>Revo Faris Saifuddin</b></sub> <br/>
+          <sub>revofaris99@gmail.com</sub>
+        </a>
+      </td>
+  </table>
+</center>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+
+Distributed under the [MIT](/LICENSE) License.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
