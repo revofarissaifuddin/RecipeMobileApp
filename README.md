@@ -82,6 +82,7 @@ deploy with aab and apk
 - [AAB](https://drive.google.com/drive/folders/1sA7HCor3gepImLBqVj0fi3oKeMax_ECu?usp=sharing)
 #### Release APK
 - [APK](https://drive.google.com/drive/folders/1ApjWfHALJCim9BIGWpjMJ0MEVVMzbhRR?usp=sharing)
+- user example (email: revfs@gmail.com pass:1234)
 
 ## Authors
 - [@revfs](https://github.com/revofarissaifuddin/)
