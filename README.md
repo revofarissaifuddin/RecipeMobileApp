@@ -7,6 +7,9 @@
         </a>
         <h2>Recipes App</h2>
         <h6>
+          <a href="https://github.com/revofarissaifuddin/RecipeMobileApp"><strong>Explore the docs »</strong></a>
+        </h6>
+        <h6>
             <a href="https://drive.google.com/drive/folders/1ApjWfHALJCim9BIGWpjMJ0MEVVMzbhRR?usp=sharing">View Demo ||</a>
             <a href="https://github.com/revofarissaifuddin/recipes-fe-week6/issues">Report Bug ||</a>
             <a href="https://github.com/revofarissaifuddin/recipes-fe-week6/issues">Request Feature</a>
@@ -117,7 +120,7 @@ Kontribusi adalah apa yang membuat komunitas open source menjadi tempat yang lua
 ## Developer
 
 <center>
-  <table>
+  <table align="center">
     <tr>
       <td align="center">
         <a href="https://github.com/revofarissaifuddin">
